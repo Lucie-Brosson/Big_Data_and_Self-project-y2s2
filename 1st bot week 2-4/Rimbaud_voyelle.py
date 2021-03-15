@@ -36,3 +36,7 @@ def try_1 (character):
 
 
 try_1(Test_string)
+
+todo : print on the same line with color
+
+todo link it to API 
