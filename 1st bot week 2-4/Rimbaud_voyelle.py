@@ -17,7 +17,7 @@ def try_1 (character):
 
     for character in Test_string :
         if character == a_letter :
-            print ('\r' + Back.BLACK + character)
+            print (Back.BLACK + character + "\n")
 
         elif character == e_letter :
             print (Back.WHITE + character)
@@ -37,6 +37,6 @@ def try_1 (character):
 
 try_1(Test_string)
 
-todo : print on the same line with color
+#todo : print on the same line with color
 
-todo link it to API 
+#todo link it to API
