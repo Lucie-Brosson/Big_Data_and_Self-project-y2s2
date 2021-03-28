@@ -1,42 +1,61 @@
-from colorama import init
-from colorama import Fore
+import tweepy
 
-from colorama import Style, Back
+import emoji
 
-init()
+consumer_key = "*********"
+consumer_secret = "**********"
 
-Test_string = "Hello I am a great big Kangourou from Wasaby"
+access_token = "*********"
+access_token_secret = "**********"
 
-a_letter = 'a'
-e_letter = 'e'
-i_letter = 'i'
-u_letter = 'u'
-o_letter = 'o'
+#callback_uri = 'oob'
 
-def try_1 (character):
+auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+#auth.set_access_token(access_token, access_token_secret)
 
-    for character in Test_string :
-        if character == a_letter :
-            print (Back.BLACK + character + "\n")
+#api = tweepy.API(auth)
 
-        elif character == e_letter :
-            print (Back.WHITE + character)
+redirect_url = (auth.get_authorization_url())
 
-        elif character == i_letter :
-            print (Back.RED + character)
+auth.get_access_token(verifier_value)
+print (redirect_url)
 
-        elif character == u_letter :
-            print (Back.GREEN + character)
+Cursor = tweepy.Cursor(api.search, q="poem", tweet_mode="extendedpy ").items(1)
 
-        elif character == o_letter :
-            print (Back.BLUE + character)
+for tweet in Cursor:
 
-        else :
-            print (Style.RESET_ALL + character)
+    Compilation = []
+
+    a_letter = 'a'
+    e_letter = 'e'
+    i_letter = 'i'
+    u_letter = 'u'
+    o_letter = 'o'
+
+    def try_1 (character):
+
+        for character in tweet :
+            if character == a_letter :
+                Compilation.append(emoji.emojize(':black_circle:'))
+
+            elif character == e_letter :
+                Compilation.append(emoji.emojize(':white_circle:'))
+
+            elif character == i_letter :
+                Compilation.append(emoji.emojize(':red_circle:'))
+
+            elif character == u_letter :
+                Compilation.append(emoji.emojize(':green_circle:'))
+
+            elif character == o_letter :
+                Compilation.append(emoji.emojize(':blue_circle:'))
+
+            else :
+                 Compilation.append(character)
 
 
-try_1(Test_string)
+    try_1(tweet)
 
-#todo : print on the same line with color
+    Final_string = ''.join (Compilation)
 
-#todo link it to API
+    print(Final_string)
