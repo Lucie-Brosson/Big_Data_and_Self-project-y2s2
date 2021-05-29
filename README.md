@@ -1,12 +1,8 @@
 # Al the debater 
 
-In this folder you will find my projects for the Bid data and the self class 
-
 Look at the wiki part to have more detail on the project 
 
-Here are the command of the bot :
-
-Start every command with al it calls the bot.
+Here are the command of the bot - Start every command with al it calls the bot.- :
 
 * al hello 
 * al status
