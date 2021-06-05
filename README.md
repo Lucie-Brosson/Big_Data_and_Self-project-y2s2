@@ -14,4 +14,4 @@ Here are the command of the bot - Start every command with al it calls the bot.-
 
 To use the research command use the command and add the word your are looking for just after the command. There is no limit of words you can ask, you just need to be precise with your command.
 
-If you want to test go to the link bellow. (The link has a expiration date).
+If you want to test go to [this discord server](https://discord.gg/bbvhbAj52x).
