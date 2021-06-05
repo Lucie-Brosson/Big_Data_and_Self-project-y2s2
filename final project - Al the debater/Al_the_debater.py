@@ -14,11 +14,11 @@ from giphy_client.rest import ApiException
 
 
 # API Gif giphy - to replace the image that I want I will you gif
-giphy_API_key = "put your API key here"
+giphy_API_key = "Your own API key "
 giphy_API_instance = giphy_client.DefaultApi()
 
 # Token to access discord
-TOKEN = "put your API key here"
+TOKEN = "Your own API key"
 
 
 # define the bot command and it's prefix
@@ -32,8 +32,9 @@ logging.basicConfig(level=logging.INFO)
 @client.event
 async def on_ready():
     print ("I am here to fight")
+    print ('version 04/06/2021 HEROKU')
 
-    # change bot presence
+    # change bot presence (just under the name of the bot in the online section)
     game = ('cluedo', 'monopoly', 'russian roulette','trivial pursuit','the flute','poker with the dogs')
     await client.change_presence(activity = discord.Activity( type = discord.ActivityType.playing, name = random.choice(game)))
 
@@ -50,11 +51,12 @@ async def on_member_remove(member):
 # other command
 @client.command(name = "hello", help="greets you")
 async def hello(ctx):
+    #Greets the user after this command with their username
     await ctx.send(f'Well good day {ctx.author}, how may I assist you today')
 
 @client.command(name="status", help="gives you his status")
 async def status(ctx):
-
+    #give a random status object
     status = ("Pretty good I should say", "I... That is a good question, this is the first time someone ask. I would say better now that you asked", "Terrible I have to say, I can't find the 3rd volume of my botanic encyclopedia")
 
     await ctx.send(random.choice(status))
@@ -62,22 +64,23 @@ async def status(ctx):
 
 @client.command(name="definition", help="helps you with definition")
 async def definition(ctx):
-
-
+    # give you a definition of the word you are searching. It uses the Wikipedia Api
     User_message = ctx.message.content
     wikipedia_research_definition = User_message[3:]
 
-    try :
+    try : # this command is use in case of error
         await ctx.send('Dear debater, here I my humble research on ' + wikipedia_research_definition + " :book:")
         await ctx.send('Definition : ' + wikipedia.summary(wikipedia_research_definition, sentences=3))
 
-    except wikipedia.exceptions.PageError as a :
+    except wikipedia.exceptions.PageError as a : #if the wikipedia article doesn't exist, the bot send this message
 
         await ctx.send ("I am sorry my dear but this is out of my jurisdiction")
 
 
 @client.command(name="date", help="helps you with date")
 async def date(ctx):
+
+    #the user ask for a date and they will be sent this command
 
     User_message = ctx.message.content
     wikipedia_research_date = User_message[3:]
@@ -87,6 +90,7 @@ async def date(ctx):
 
         await ctx.send('Description : ' + wikipedia.summary(wikipedia_research_date, sentences=3))
 
+        #the Wikipedia API can also access specific section of the article. Here I choose to do January to december to have all the dates.
         date_events = wikipedia.page("Events" + wikipedia_research_date).section('Events','January-December','Date unknown')
         date_cut = date_events[:200]
 
@@ -101,13 +105,15 @@ async def artwork(ctx):
 
     User_message = ctx.message.content
     wikipedia_research_art = User_message[3:]
+    #this command will send the artworked asked by the user
 
     try :
 
         await ctx.send('Dear debater, here I my humble research on ' + wikipedia_research_art + " :art:")
 
         try :
-            giphy_api_response = giphy_API_instance.gifs_search_get(giphy_API_key, wikipedia_research_art, limit=2)
+            # this section is for the gif api. It chooses a random gif between 10 and send it to the server. The gif is embeded
+            giphy_api_response = giphy_API_instance.gifs_search_get(giphy_API_key, wikipedia_research_art, limit=10)
             movie_gif_list = list(giphy_api_response.data)
             Movie_gif = random.choice(movie_gif_list)
 
@@ -117,7 +123,7 @@ async def artwork(ctx):
 
         except ApiException as e:
             await ctx.send ("nothing to see here, go through")
-
+            # it sends a short descrpition of the artwork
         await ctx.send('Description : ' + wikipedia.summary(wikipedia_research_art, sentences=2))
 
     except wikipedia.exceptions.PageError as a :
@@ -128,6 +134,8 @@ async def artwork(ctx):
 @client.command(name="movie", help="helps you with movie")
 async def movie(ctx):
 
+    #this command send the result for the given movie
+
     User_message = ctx.message.content
     wikipedia_research_movie = User_message[3:]
 
@@ -136,7 +144,7 @@ async def movie(ctx):
         await ctx.send('Dear debater, here I my humble research on the ' + wikipedia_research_movie + " :clapper:")
 
         try :
-            giphy_api_response = giphy_API_instance.gifs_search_get(giphy_API_key, wikipedia_research_movie, limit=2)
+            giphy_api_response = giphy_API_instance.gifs_search_get(giphy_API_key, wikipedia_research_movie, limit=10)
             movie_gif_list = list(giphy_api_response.data)
             Movie_gif = random.choice(movie_gif_list)
 
@@ -161,17 +169,19 @@ async def movie(ctx):
 
         await ctx.send ("I am sorry my dear but this is out of my jurisdiction")
 
-
-
-
 @client.command(name="funfact", help="gives you his favourite fun fact")
 async def fun_fact(ctx):
+    #this command give a random wikipedia article
     random_page = wikipedia.random(pages=1)
     await ctx.send(wikipedia.summary(random_page, sentences = 10))
+
+
 
 # personnalize help menu
 @client.group(invoke_without_command = True)
 async def help(ctx):
+    # this command send the embeded help board. It gives every command possible with a description of the command and how to use it.
+    
     em = discord.Embed(title = "Glossary of my extended knwoledge", description ="use the 'al help + your subject of interest' to have more detail on how to use a specific command")
 
     em.add_field(name = "hello", value = "I will greet you")
